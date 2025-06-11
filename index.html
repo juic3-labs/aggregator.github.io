@@ -1,0 +1,1029 @@
+<!DOCTYPE html><html lang="zh-TW"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧能源解決方案</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff4df9 0%, #9A0095 100%);
+        }
+
+        .gradient-bg:hover {
+            background: linear-gradient(135deg, #9A0095 0%, #ff4df9 100%);
+        }
+        
+        .hero-pattern {
+            background-color: #0f172a;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #9A0095;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .calculator-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #9A0095;
+            cursor: pointer;
+        }
+        
+        .calculator-slider::-moz-range-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #9A0095;
+            cursor: pointer;
+        }
+
+        #home {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* 確保 canvas 在內容後方 */
+        }
+
+        #home .container {
+            position: relative;
+            z-index: 1; /* 確保內容在 canvas 上方 */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <!-- 導航欄 -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                    <img src="assets/logo/久榯黑.svg" alt="久榯科技" class="h-8">
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-slate-700 hover:text-[#9A0095] transition-colors">首頁</a>
+                <a href="#solution" class="nav-link text-slate-700 hover:text-[#9A0095] transition-colors">解決方案</a>
+                <a href="#services" class="nav-link text-slate-700 hover:text-[#9A0095] transition-colors">服務</a>
+                <a href="#calculator" class="nav-link text-slate-700 hover:text-[#9A0095] transition-colors">獎勵試算</a>
+                <a href="#process" class="nav-link text-slate-700 hover:text-[#9A0095] transition-colors">合作流程</a>
+                <a href="#partners" class="nav-link text-slate-700 hover:text-[#9A0095] transition-colors">戰略夥伴</a>
+                <a href="#contact" class="nav-link text-slate-700 hover:text-[#9A0095] transition-colors">聯絡我們</a>
+            </div>
+            
+            <button class="md:hidden text-slate-700 focus:outline-none" id="menu-toggle">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- 行動裝置選單 -->
+        <div class="md:hidden hidden bg-white pb-4 px-4" id="mobile-menu">
+            <a href="#home" class="block py-2 text-slate-700 hover:text-[#9A0095]">首頁</a>
+            <a href="#solution" class="block py-2 text-slate-700 hover:text-[#9A0095]">解決方案</a>
+            <a href="#services" class="block py-2 text-slate-700 hover:text-[#9A0095]">服務</a>
+            <a href="#calculator" class="block py-2 text-slate-700 hover:text-[#9A0095]">獎勵試算</a>
+            <a href="#process" class="block py-2 text-slate-700 hover:text-[#9A0095]">合作流程</a>
+            <a href="#partners" class="block py-2 text-slate-700 hover:text-[#9A0095]">戰略夥伴</a>
+            <a href="#contact" class="block py-2 text-slate-700 hover:text-[#9A0095]">聯絡我們</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首頁 Home -->
+    <section id="home" class="min-h-screen flex items-center pt-16" style="background-image: url('assets/久榯簡報.svg'); background-size: cover; background-position: center;">
+        <canvas id="canvas"></canvas>
+        <div class="container mx-auto px-4 py-20 relative z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-2/3 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 whitespace-nowrap">
+                        企業儲能與用電管理顧問
+                    </h1>
+                    <p class="text-lg text-slate-300 mb-8 max-w-lg">
+                        專為企業用戶打造的儲能管理顧問，無論您已有設備、<br>已有指定施工團隊，或對儲能毫無經驗，皆能依需求彈性協作。
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#services" class="btn bg-white text-[#9A0095] font-medium py-3 px-6 rounded-lg shadow-lg hover:bg-purple-100 shadow-xl transition-all text-center">
+                            探索服務
+                        </a>
+                        <a href="#calculator" class="btn gradient-bg text-white font-medium py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all text-center">
+                            獎勵試算
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 基於儲能的智慧節能方案 -->
+    <section id="solution" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">基於儲能的智慧節能方案</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                    從效益評估、契約容量設計，到電力交易平台投標的全流程服務，<br>我們協助企業將儲能轉化為穩定現金流。
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="relative h-96 w-full">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-64 h-64 bg-blue-100 rounded-full flex items-center justify-center animate-pulse">
+                                <div class="w-48 h-48 bg-blue-200 rounded-full flex items-center justify-center">
+                                    <div class="w-32 h-32 bg-blue-300 rounded-full flex items-center justify-center">
+                                        <svg class="w-16 h-16 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 動畫元素 -->
+                        <div class="absolute top-1/4 left-1/4 w-8 h-8 bg-[#9A0095] rounded-full animate-ping opacity-75"></div>
+                        <div class="absolute bottom-1/3 right-1/3 w-6 h-6 bg-green-500 rounded-full animate-ping opacity-75" style="animation-delay: 1s"></div>
+                        <div class="absolute top-1/2 right-1/4 w-4 h-4 bg-yellow-500 rounded-full animate-ping opacity-75" style="animation-delay: 1.5s"></div>
+                        
+                        <!-- 連接線 -->
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M200 200 L100 100" stroke="#9A0095" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse"></path>
+                            <path d="M200 200 L300 100" stroke="#9A0095" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse"></path>
+                            <path d="M200 200 L300 300" stroke="#9A0095" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse"></path>
+                            <path d="M200 200 L100 300" stroke="#9A0095" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 md:pl-10">
+                    <div class="space-y-8">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#9A0095] text-white">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-medium text-slate-900">精準效益預估</h3>
+                                <p class="mt-2 text-slate-600">
+                                    依照歷史用電需求預估儲能投資效益，精準衡量投資風險<br>全天候監控能源使用情況，提供即時數據分析，幫助您掌握能源消耗模式。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#9A0095] text-white">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-medium text-slate-900">DRAI 需量管理</h3>
+                                <p class="mt-2 text-slate-600">
+                                    透過 AI 演算法協調尖峰需量與案場用電需求，最大幅度降低電費。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#9A0095] text-white">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-medium text-slate-900">能源一站式管理</h3>
+                                <p class="mt-2 text-slate-600">
+                                    手把手協助儲能設備案場規劃，最少的管理，最大的效益。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務 Services -->
+    <section id="services" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">我們的服務</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                    無論您是否已有儲能設備，或是正在考慮導入，我們都能提供最適合您需求的解決方案。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 服務卡片 1 -->
+                <div class="service-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                    <div class="h-3 bg-[#9A0095]"></div>
+                    <div class="p-8">
+                        <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">我已有儲能設備｜參與需量反應</h3>
+                        <p class="text-slate-600 mb-6">
+                            已擁有儲能系統？透過久榯能源參與電網需量反應計劃，將閒置容量轉化為現金，同時優化您的儲能設備使用效率。
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>無需額外硬體投資</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>創造額外被動收入</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>智慧能源管理</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block text-[#9A0095] font-medium hover:text-[#50004D] transition-colors">
+                            開始賺取需量獎勵 <span class="ml-1">→</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 服務卡片 2 -->
+                <div class="service-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                    <div class="h-3 bg-green-600"></div>
+                    <div class="p-8">
+                        <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">尚未建置儲能｜制定儲能計畫</h3>
+                        <p class="text-slate-600 mb-6">
+                            考慮導入儲能系統？我們提供專業評估與規劃服務，幫助您設計最適合的儲能解決方案，降低電費暴漲衝擊。
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>投資回報分析</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>專業需求評估</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>靈活整合協作廠商</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block text-green-600 font-medium hover:text-green-800 transition-colors">
+                            開始建置方案 <span class="ml-1">→</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 服務卡片 3 -->
+                <div class="service-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                    <div class="h-3 bg-blue-600"></div>
+                    <div class="p-8">
+                        <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">無初期資本｜零預算導入方案</h3>
+                        <p class="text-slate-600 mb-6">
+                            預算有限？不想初期投入成本？我們提供創新的零預算導入方案，讓您無需擔憂初期設備成本，也能零風險享有電費減免。
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>零前期投資</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>節能效益分享</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>零風險套利</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block text-blue-600 font-medium hover:text-blue-800 transition-colors">
+                            開始零風險收益 <span class="ml-1">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 獎勵試算 Calculator -->
+    <section id="calculator" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">獎勵試算</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                    使用我們的計算工具，估算您參與需量反應計劃可獲得的潛在獎勵金額。
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-bold mb-6">輸入您的資訊</h3>
+                            
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-slate-700 mb-2">設備容量</label>
+                                <input type="range" min="100" max="5000" value="500" step="100" class="calculator-slider w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" id="capacity-slider">
+                                <div class="flex justify-between mt-2">
+                                    <span class="text-sm text-slate-500">100 kWh</span>
+                                    <span class="text-sm font-medium text-[#9A0095]" id="capacity-value">500 kWh</span>
+                                    <span class="text-sm text-slate-500">5000 kWh</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-slate-700">安裝成本 (每 kWh)</label>
+                                <p class="text-xs text-slate-500 mt-1 mb-2">台電建議每度電 12,500 元</p>
+                                <input type="range" min="10000" max="25000" value="12000" step="500" class="calculator-slider w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" id="cost-slider">
+                                <div class="flex justify-between mt-2">
+                                    <span class="text-sm text-slate-500">10000 元</span>
+                                    <span class="text-sm font-medium text-[#9A0095]" id="cost-value">12000 元</span>
+                                    <span class="text-sm text-slate-500">25000 元</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-slate-700 mb-2">每日設備運行時數</label>
+                                <input type="range" min="1" max="24" value="12" class="calculator-slider w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" id="hours-slider">
+                                <div class="flex justify-between mt-2">
+                                    <span class="text-sm text-slate-500">1 小時</span>
+                                    <span class="text-sm font-medium text-[#9A0095]" id="hours-value">12 小時</span>
+                                    <span class="text-sm text-slate-500">24 小時</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-50 p-6 rounded-lg">
+                            <h3 class="text-xl font-bold mb-6">預估獎勵金額</h3>
+                            
+                            <div class="mb-8">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-slate-600">月獎勵金額</span>
+                                    <span class="text-xl font-bold text-[#9A0095]" id="monthly-reward">NT$ 0</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2">
+                                    <div class="bg-[#9A0095] h-2 rounded-full" id="monthly-progress" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-8">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-slate-600">年獎勵金額</span>
+                                    <span class="text-xl font-bold text-green-600" id="yearly-reward">NT$ 0</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2">
+                                    <div class="bg-green-600 h-2 rounded-full" id="yearly-progress" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-8">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-slate-600">投資回收期</span>
+                                    <span class="text-xl font-bold text-blue-600" id="roi-period">0 年</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" id="roi-progress" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <a href="#contact" id="get-report-btn" class="inline-block bg-[#9A0095] text-white font-medium py-3 px-6 rounded-lg shadow hover:bg-[#750071] transition-colors">
+                                    獲取詳細報告
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 合作流程 How It Works -->
+    <section id="process" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">合作流程</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                    簡單四步驟，輕鬆開始您的智慧能源管理之旅。
+                </p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="relative">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <!-- 步驟 1 -->
+                        <div class="relative z-10">
+                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                    1
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 text-center">需求評估</h3>
+                                <p class="text-slate-600 text-center">
+                                    我們的專家團隊將評估您的能源需求和現有設施，為您量身打造最適合的解決方案。
+                                </p>
+                                <div class="mt-4 flex justify-center">
+                                    <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 步驟 2 -->
+                        <div class="relative z-10">
+                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                    2
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 text-center">方案設計</h3>
+                                <p class="text-slate-600 text-center">
+                                    根據評估結果，為您量身打造最適合的解決方案，包含系統配置和投資回報分析。
+                                </p>
+                                <div class="mt-4 flex justify-center">
+                                    <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 步驟 3 -->
+                        <div class="relative z-10">
+                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                    3
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 text-center">系統整合</h3>
+                                <p class="text-slate-600 text-center">
+                                    無縫整合我們的智能管理系統與您的能源設備，確保系統穩定運行和最佳效能。
+                                </p>
+                                <div class="mt-4 flex justify-center">
+                                    <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 步驟 4 -->
+                        <div class="relative z-10">
+                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                    4
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 text-center">持續優化</h3>
+                                <p class="text-slate-600 text-center">
+                                    定期分析數據，不斷優化系統效能，提升收益，確保您的投資獲得最佳回報。
+                                </p>
+                                <div class="mt-4 flex justify-center">
+                                    <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-16 text-center">
+                    <a href="#contact" class="inline-block bg-[#9A0095] text-white font-medium py-3 px-8 rounded-lg shadow hover:bg-[#750071] transition-colors">
+                        立即開始合作
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 戰略夥伴 Energy Partners -->
+    <section id="partners" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">戰略夥伴</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                    我們與業界領先的能源企業和技術提供商合作，為您提供最全面的解決方案。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- 夥伴 Logo 1 -->
+                <div class="flex justify-center p-6 bg-slate-50 rounded-lg hover:shadow-md transition-shadow">
+                    <div class="text-center">
+                        <img src="assets/partner/gbg.png" alt="GBG Logo" class="w-32 h-32 mx-auto object-contain">
+                        <p class="mt-1 font-medium text-slate-800">GBG</p>
+                        <p class="mt-2 text-sm text-slate-600">「久榯相較於其他聚合商更專注在中小型案場上，也提供更客製化的服務讓參與台電輔助服務更直覺、更簡單」</p>
+                        <p class="mt-1 text-xs text-slate-500">陳其鋒 | CEO</p>
+                    </div>
+                </div>
+                
+                <!-- 夥伴 Logo 2 -->
+                <div class="flex justify-center p-6 bg-slate-50 rounded-lg hover:shadow-md transition-shadow">
+                    <div class="text-center">
+                        <img src="assets/partner/jj.png" alt="JJ Logo" class="w-32 h-32 mx-auto object-contain">
+                        <p class="mt-1 font-medium text-slate-800">J&J Power</p>
+                        <p class="mt-2 text-sm text-slate-600">「久榯能源總是能在第一時間提供精準的即時備轉效益計算，讓我們銷售儲能設備時能給業主更多購買動機」</p>
+                        <p class="mt-1 text-xs text-slate-500">Jennifer | 業務副總</p>
+                    </div>
+                </div>
+                
+                <!-- 夥伴 Logo 3 -->
+                <div class="flex justify-center p-6 bg-slate-50 rounded-lg hover:shadow-md transition-shadow">
+                    <div class="text-center">
+                        <img src="assets/partner/wb.png" alt="WB Logo" class="w-32 h-32 mx-auto object-contain">
+                        <p class="mt-1 font-medium text-slate-800">韋伯能源科技</p>
+                        <p class="mt-2 text-sm text-slate-600">「久榯能源幫我們創造案場效益，吸引更多業主願意進行安裝」</p>
+                        <p class="mt-1 text-xs text-slate-500">蔡澤文 | 總經理</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16">
+                <div class="bg-slate-50 rounded-xl p-8">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-2/3 mb-6 md:mb-0 md:pr-8">
+                            <h3 class="text-2xl font-bold mb-4">成為我們的合作夥伴</h3>
+                            <p class="text-slate-600 mb-4">
+                                我們樂於與產業先進共同推動能源轉型，共同創造分散式能源未來
+                            </p>
+                            <a href="#contact" class="inline-block text-[#9A0095] font-medium hover:text-[#50004D] transition-colors">
+                                了解合作機會 <span class="ml-1">→</span>
+                            </a>
+                        </div>
+                        <div class="md:w-1/3">
+                            <svg class="w-full max-w-xs mx-auto" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="40" y="30" width="120" height="90" rx="8" fill="#e0e7ff"></rect>
+                                <circle cx="100" cy="60" r="15" fill="#818cf8"></circle>
+                                <rect x="70" y="85" width="60" height="6" rx="3" fill="#818cf8"></rect>
+                                <rect x="80" y="100" width="40" height="6" rx="3" fill="#818cf8"></rect>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡我們 Contact -->
+    <section id="contact" class="py-20 text-white" style="background-color: #2a1f30;">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">聯絡我們</h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">
+                    有任何問題或想了解更多資訊？請填寫以下表單，我們的專家將盡快與您聯繫。
+                </p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="bg-[#3a2f40] rounded-xl overflow-hidden shadow-xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold mb-6">聯絡表單</h3>
+                            
+                            <form id="contact-form" class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">姓名</label>
+                                    <input type="text" class="w-full px-4 py-2 rounded-lg bg-[#2a1f30] border border-[#4a3f50] text-white focus:outline-none focus:ring-2 focus:ring-[#9A0095]" placeholder="請輸入您的姓名">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">公司名稱</label>
+                                    <input type="text" class="w-full px-4 py-2 rounded-lg bg-[#2a1f30] border border-[#4a3f50] text-white focus:outline-none focus:ring-2 focus:ring-[#9A0095]" placeholder="請輸入您的公司名稱">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">產業類別</label>
+                                    <div class="relative">
+                                        <select class="w-full px-4 py-2 pr-10 rounded-lg bg-[#2a1f30] border border-[#4a3f50] text-white focus:outline-none focus:ring-2 focus:ring-[#9A0095] appearance-none bg-no-repeat" style="background-image: none;">
+                                            <option value="冷凍業">冷凍業</option>
+                                            <option value="金屬製造業">金屬製造業</option>
+                                            <option value="化學與製藥業">化學與製藥業</option>
+                                            <option value="紡織業">紡織業</option>
+                                            <option value="半導體業">半導體業</option>
+                                            <option value="一般製造業" selected>一般製造業</option>
+                                            <option value="其他">其他</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-white">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.29a.75.75 0 010-1.08z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">電子郵件</label>
+                                    <input type="email" class="w-full px-4 py-2 rounded-lg bg-[#2a1f30] border border-[#4a3f50] text-white focus:outline-none focus:ring-2 focus:ring-[#9A0095]" placeholder="請輸入您的電子郵件">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">電話</label>
+                                    <input type="tel" class="w-full px-4 py-2 rounded-lg bg-[#2a1f30] border border-[#4a3f50] text-white focus:outline-none focus:ring-2 focus:ring-[#9A0095]" placeholder="請輸入您的聯絡電話">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">訊息</label>
+                                    <textarea id="message" class="w-full px-4 py-2 rounded-lg bg-[#2a1f30] border border-[#4a3f50] text-white focus:outline-none focus:ring-2 focus:ring-[#9A0095]" rows="4" placeholder="請輸入您的訊息"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="w-full gradient-bg text-white font-medium py-3 px-6 rounded-lg hover:bg-[#750071] transition-colors">
+                                        送出訊息
+                                    </button>
+                            </form>
+                        </div>
+                        
+                        <div class="bg-[#2a1f30] p-8">
+                            <h3 class="text-2xl font-bold mb-6">聯絡資訊</h3>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 mt-1">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-medium text-white">地址</h4>
+                                        <p class="mt-1 text-slate-300">台北市信義區吳興街 600 巷 100 弄 20 號</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start" hidden>
+                                    <div class="flex-shrink-0 mt-1" hidden>
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4" hidden>
+                                        <h4 class="text-lg font-medium text-white">電話</h4>
+                                        <p class="mt-1 text-slate-300">02-2345-6789</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 mt-1">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-medium text-white">電子郵件</h4>
+                                        <p class="mt-1 text-slate-300">gm@juic3.xyz</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="pt-6" hidden>
+                                    <h4 class="text-lg font-medium text-white mb-4">關注我們</h4>
+                                    <div class="flex space-x-4">
+                                        <a href="#" class="w-10 h-10 rounded-full bg-[#3a2f40] flex items-center justify-center text-white hover:bg-white hover:text-[#3a2f40] transition-colors">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 rounded-full bg-[#3a2f40] flex items-center justify-center text-white hover:bg-white hover:text-[#3a2f40] transition-colors">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 rounded-full bg-[#3a2f40] flex items-center justify-center text-white hover:bg-white hover:text-[#3a2f40] transition-colors">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 rounded-full bg-[#3a2f40] flex items-center justify-center text-white hover:bg-white hover:text-[#3a2f40] transition-colors">
+                                            <i class="fab fa-youtube"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center text-slate-400 text-sm">
+                    <p>© 2025 Juic3. 版權所有。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+            });
+        });
+        
+        // 行動裝置選單
+        const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function () {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 獎勵試算計算
+        function updateRewardCalculation() {
+            const capacity = parseInt(document.getElementById('capacity-slider').value);
+            const cost = parseInt(document.getElementById('cost-slider').value);
+            const hours = parseInt(document.getElementById('hours-slider').value);
+
+            const monthlyReward = capacity * (4.2 * hours + 130); // Simplified example
+            const yearlyReward = monthlyReward * 12;
+            const roiPeriod = (capacity * cost) / yearlyReward; // Simplified ROI
+
+            document.getElementById('monthly-reward').innerText = `NT$ ${monthlyReward.toLocaleString()}`;
+            document.getElementById('yearly-reward').innerText = `NT$ ${yearlyReward.toLocaleString()}`;
+            document.getElementById('roi-period').innerText = `${roiPeriod.toFixed(1)} 年`;
+
+            // Update progress bars (example, needs proper scaling)
+            document.getElementById('monthly-progress').style.width = `${Math.min(monthlyReward / 1154000 * 100, 100)}%`;
+            document.getElementById('yearly-progress').style.width = `${Math.min(yearlyReward / 13848000 * 100, 100)}%`;
+            document.getElementById('roi-progress').style.width = `${Math.min(roiPeriod / 20 * 100, 100)}%`;
+
+            // Update slider value displays
+            document.getElementById('capacity-value').innerText = `${capacity} kWh`;
+            document.getElementById('cost-value').innerText = `${cost} 元`;
+            document.getElementById('hours-value').innerText = `${hours} 小時`;
+        }
+
+        document.getElementById('capacity-slider').addEventListener('input', updateRewardCalculation);
+        document.getElementById('cost-slider').addEventListener('input', updateRewardCalculation);
+        document.getElementById('hours-slider').addEventListener('input', updateRewardCalculation);
+
+        // 表單提交處理
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('感謝您的訊息！我們將盡快與您聯繫。');
+            this.reset();
+        });
+
+        // Initial calculation on page load
+        updateRewardCalculation();
+
+        // New function to fill contact form message
+        function fillContactFormMessage() {
+            const capacityValue = document.getElementById('capacity-value').innerText;
+            const costValue = document.getElementById('cost-value').innerText;
+            const hoursValue = document.getElementById('hours-value').innerText;
+
+            const message = `我的設備資訊：\n設備容量：${capacityValue}\n安裝成本 (每 kWh)：${costValue}\n每日設備運行時數：${hoursValue}`;
+            document.getElementById('message').value = message;
+        }
+
+        // Event listener for the "獲取詳細報告" button
+        document.getElementById('get-report-btn').addEventListener('click', fillContactFormMessage);
+    
+        // 電網動畫
+        // 設置畫布
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 設置畫布尺寸
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // 電網節點類
+        class Node {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.lastX = x;
+                this.lastY = y;
+            }
+            
+            update() {
+                this.lastX = this.x;
+                this.lastY = this.y;
+                
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                // 邊界檢查
+                if (this.x < 0 || this.x > canvas.width) {
+                    this.speedX *= -1;
+                }
+                
+                if (this.y < 0 || this.y > canvas.height) {
+                    this.speedY *= -1;
+                }
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = '#9A0095';
+                ctx.fill();
+            }
+        }
+        
+        // 創建節點
+        const nodeCount = 100;
+        const nodes = [];
+        const connectionDistance = 150;
+        
+        function createNodes() {
+            for (let i = 0; i < nodeCount; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                nodes.push(new Node(x, y));
+            }
+        }
+        
+        createNodes();
+        
+        // 繪製連接線
+        function drawConnections() {
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        
+                        // 根據距離設置線條透明度
+                        const opacity = 1 - (distance / connectionDistance);
+                        ctx.strokeStyle = `rgba(154, 0, 149, ${opacity * 0.8})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        // 鼠標互動
+        let mouse = {
+            x: undefined,
+            y: undefined,
+            radius: 150
+        };
+        
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+        
+        // 動畫循環
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 更新和繪製節點
+            for (let i = 0; i < nodes.length; i++) {
+                nodes[i].update();
+                nodes[i].draw();
+                
+                // 鼠標互動
+                if (mouse.x !== undefined && mouse.y !== undefined) {
+                    const dx = nodes[i].x - mouse.x;
+                    const dy = nodes[i].y - mouse.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < mouse.radius) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        
+                        nodes[i].x += forceDirectionX * force * 2;
+                        nodes[i].y += forceDirectionY * force * 2;
+                    }
+                }
+            }
+            
+            // 繪製連接線
+            drawConnections();
+            
+            // 添加穩定的電流效果（不閃爍）
+            for (let i = 0; i < nodes.length; i++) {
+                if (i % 10 === 0) { // 減少電流數量，使其更穩定
+                    const startNode = nodes[i];
+                    let closestNode = null;
+                    let minDistance = connectionDistance * 0.7; // 縮短電流連接距離
+                    
+                    for (let j = 0; j < nodes.length; j++) {
+                        if (i !== j) {
+                            const dx = startNode.x - nodes[j].x;
+                            const dy = startNode.y - nodes[j].y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < minDistance) {
+                                minDistance = distance;
+                                closestNode = nodes[j];
+                            }
+                        }
+                    }
+                    
+                    if (closestNode) {
+                        ctx.beginPath();
+                        ctx.moveTo(startNode.x, startNode.y);
+                        ctx.lineTo(closestNode.x, closestNode.y);
+                        ctx.strokeStyle = '#9A0095';
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    </script>
+</body>
+</html>
