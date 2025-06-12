@@ -60,7 +60,8 @@
             position: relative;
         }
         
-        .nav-link::after {
+        .nav-link::after,
+        .nav-link.active::after {
             content: '';
             position: absolute;
             width: 0;
@@ -71,8 +72,13 @@
             transition: width 0.3s;
         }
         
-        .nav-link:hover::after {
+        .nav-link:hover::after,
+        .nav-link.active::after {
             width: 100%;
+        }
+        
+        .nav-link.active {
+            color: #9A0095 !important;
         }
         
         .calculator-slider::-webkit-slider-thumb {
@@ -861,15 +867,49 @@
         // New function to fill contact form message
         function fillContactFormMessage() {
             const capacityValue = document.getElementById('capacity-value').innerText;
-            const costValue = document.getElementById('cost-value').innerText;
-            const hoursValue = document.getElementById('hours-value').innerText;
+            const costValue = document.getElementById('cost-slider').value; // Get actual value from slider
+            const hoursValue = document.getElementById('hours-slider').value; // Get actual value from slider
 
-            const message = `我的設備資訊：\n設備容量：${capacityValue}\n安裝成本 (每 kWh)：${costValue}\n每日設備運行時數：${hoursValue}`;
+            const message = `我的設備資訊：\n設備容量：${capacityValue}\n安裝成本 (每 kWh)：${costValue} 元\n每日設備運行時數：${hoursValue} 小時`;
             document.getElementById('message').value = message;
         }
 
         // Event listener for the "獲取詳細報告" button
-        document.getElementById('get-report-btn').addEventListener('click', fillContactFormMessage);
+        document.getElementById('get-report-btn').addEventListener('click', function() {
+            fillContactFormMessage();
+            // Smooth scroll to contact section
+            document.querySelector('#contact').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Intersection Observer for highlighting active navigation links
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.3 // Adjust as needed
+        };
+
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const currentSectionId = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${currentSectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
     
         // 電網動畫
         // 設置畫布
