@@ -119,6 +119,59 @@
             position: relative;
             z-index: 1; /* 確保內容在 canvas 上方 */
         }
+
+        /* 合作流程區塊樣式 */
+        .process-section {
+            position: relative;
+            height: 200vh; /* 桌面端高度：提供足夠的滾動空間 */
+        }
+
+        .process-container {
+            height: 100vh;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            background-color: #f8fafc;
+        }
+
+        /* 手機版樣式覆蓋 (小於或等於 767px) */
+        @media (max-width: 767px) {
+            .process-section {
+                height: auto !important; /* 手機端：取消固定高度 */
+                padding-top: 5rem !important; /* py-20 效果 */
+                padding-bottom: 5rem !important; /* py-20 效果 */
+                background-color: #f8fafc !important; /* bg-slate-50 效果 */
+                position: static !important; /* 取消 relative 定位 */
+            }
+
+            .process-container {
+                position: static !important; /* 取消 sticky 定位 */
+                height: auto !important; /* 取消 100vh 高度 */
+                display: block !important; /* 確保是塊級元素，不影響內容流 */
+                background-color: transparent !important; /* 移除背景色 */
+                padding: 0 !important; /* 移除內邊距 */
+                margin: 0 !important; /* 移除外邊距 */
+                width: auto !important; /* 允許內容自適應寬度 */
+            }
+        }
+
+        .process-card {
+            transition: all 0.5s ease;
+            transform: scale(0.9);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .process-card.active {
+            transform: scale(1);
+            opacity: 1;
+            filter: grayscale(0);
+            box-shadow: 0 10px 25px rgba(154, 0, 149, 0.2);
+            border: 2px solid #9A0095;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -505,96 +558,98 @@
     </section>
 
     <!-- 合作流程 How It Works -->
-    <section id="process" class="py-20 bg-slate-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">合作流程</h2>
-                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
-                    簡單四步驟，輕鬆開始您的智慧能源管理之旅。
-                </p>
-            </div>
-            
-            <div class="max-w-5xl mx-auto">
-                <div class="relative">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <!-- 步驟 1 -->
-                        <div class="relative z-10">
-                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                                <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
-                                    1
-                                </div>
-                                <h3 class="text-xl font-bold mb-3 text-center">需求評估</h3>
-                                <p class="text-slate-600 text-center">
-                                    我們的專家團隊將評估您的能源需求和現有設施，為您量身打造最適合的解決方案。
-                                </p>
-                                <div class="mt-4 flex justify-center">
-                                    <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 步驟 2 -->
-                        <div class="relative z-10">
-                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                                <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
-                                    2
-                                </div>
-                                <h3 class="text-xl font-bold mb-3 text-center">方案設計</h3>
-                                <p class="text-slate-600 text-center">
-                                    根據評估結果，為您量身打造最適合的解決方案，包含系統配置和投資回報分析。
-                                </p>
-                                <div class="mt-4 flex justify-center">
-                                    <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
+    <section id="process" class="process-section">
+        <div class="process-container">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">合作流程</h2>
+                    <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                        簡單四步驟，輕鬆開始您的智慧能源管理之旅。
+                    </p>
+                </div>
+                
+                <div class="max-w-5xl mx-auto">
+                    <div class="relative">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                            <!-- 步驟 1 -->
+                            <div class="relative z-10">
+                                <div class="process-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                    <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                        1
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-3 text-center">需求評估</h3>
+                                    <p class="text-slate-600 text-center">
+                                        我們的專家團隊將評估您的能源需求和現有設施，為您量身打造最適合的解決方案。
+                                    </p>
+                                    <div class="mt-4 flex justify-center">
+                                        <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- 步驟 3 -->
-                        <div class="relative z-10">
-                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                                <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
-                                    3
-                                </div>
-                                <h3 class="text-xl font-bold mb-3 text-center">系統整合</h3>
-                                <p class="text-slate-600 text-center">
-                                    無縫整合我們的智能管理系統與您的能源設備，確保系統穩定運行和最佳效能。
-                                </p>
-                                <div class="mt-4 flex justify-center">
-                                    <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
+                            
+                            <!-- 步驟 2 -->
+                            <div class="relative z-10">
+                                <div class="process-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                    <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                        2
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-3 text-center">方案設計</h3>
+                                    <p class="text-slate-600 text-center">
+                                        根據評估結果，為您量身打造最適合的解決方案，包含系統配置和投資回報分析。
+                                    </p>
+                                    <div class="mt-4 flex justify-center">
+                                        <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- 步驟 4 -->
-                        <div class="relative z-10">
-                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                                <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
-                                    4
+                            
+                            <!-- 步驟 3 -->
+                            <div class="relative z-10">
+                                <div class="process-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                    <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                        3
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-3 text-center">系統整合</h3>
+                                    <p class="text-slate-600 text-center">
+                                        無縫整合我們的智能管理系統與您的能源設備，確保系統穩定運行和最佳效能。
+                                    </p>
+                                    <div class="mt-4 flex justify-center">
+                                        <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </div>
                                 </div>
-                                <h3 class="text-xl font-bold mb-3 text-center">持續優化</h3>
-                                <p class="text-slate-600 text-center">
-                                    定期分析數據，不斷優化系統效能，提升收益，確保您的投資獲得最佳回報。
-                                </p>
-                                <div class="mt-4 flex justify-center">
-                                    <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
+                            </div>
+                            
+                            <!-- 步驟 4 -->
+                            <div class="relative z-10">
+                                <div class="process-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                    <div class="w-16 h-16 rounded-full bg-[#9A0095] text-white flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                        4
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-3 text-center">持續優化</h3>
+                                    <p class="text-slate-600 text-center">
+                                        定期分析數據，不斷優化系統效能，提升收益，確保您的投資獲得最佳回報。
+                                    </p>
+                                    <div class="mt-4 flex justify-center">
+                                        <svg class="w-6 h-6 text-[#9A0095]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="mt-16 text-center">
-                    <a href="#contact" class="inline-block bg-[#9A0095] text-white font-medium py-3 px-8 rounded-lg shadow hover:bg-[#750071] transition-colors">
-                        立即開始合作
-                    </a>
+                    
+                    <div class="mt-16 text-center">
+                        <a href="#contact" class="inline-block bg-[#9A0095] text-white font-medium py-3 px-8 rounded-lg shadow hover:bg-[#750071] transition-colors">
+                            立即開始合作
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1076,6 +1131,49 @@
         }
         
         animate();
+
+        // 合作流程卡片動畫
+        const processSection = document.getElementById('process');
+        const processCards = document.querySelectorAll('.process-card');
+
+        function updateCards(scrollProgress) {
+            const numCards = processCards.length;
+            let activeCardIndex = 0;
+
+            if (scrollProgress > 0 && scrollProgress <= 1) {
+                // 計算目前滾動進度對應到的卡片索引
+                activeCardIndex = Math.floor(scrollProgress * numCards);
+                
+                // 確保索引不會超過卡片總數（當 scrollProgress 為 1 時，會是最後一張卡片）
+                if (activeCardIndex >= numCards) {
+                    activeCardIndex = numCards - 1;
+                }
+            }
+
+            processCards.forEach((card, index) => {
+                if (index === activeCardIndex) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+                const rect = processSection.getBoundingClientRect();
+                
+                let scrollProgress = 0;
+                // 計算滾動進度在「合作流程」區塊的範圍內
+                const triggerStart = processSection.offsetTop;
+                const triggerEnd = processSection.offsetTop + processSection.offsetHeight - window.innerHeight;
+
+                if (triggerEnd > triggerStart) {
+                    scrollProgress = (window.scrollY - triggerStart) / (triggerEnd - triggerStart);
+                    scrollProgress = Math.min(Math.max(scrollProgress, 0), 1); // 將進度限制在 0 到 1 之間
+                }
+                
+                updateCards(scrollProgress);
+            });
     </script>
 </body>
 </html>
