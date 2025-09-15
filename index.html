@@ -979,11 +979,49 @@
     <script>
         // 語言切換功能
         let currentLanguage = 'zh';
-        
-        function toggleLanguage() {
-            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+
+        function setLanguage(lang, updateUrl = true) {
+            currentLanguage = lang === 'en' ? 'en' : 'zh';
             updateLanguage();
             updateLanguageToggleButtons();
+            if (updateUrl) updateURLLanguage();
+        }
+
+        function toggleLanguage() {
+            setLanguage(currentLanguage === 'zh' ? 'en' : 'zh');
+        }
+
+        // 依網址決定語言（支援 /en、?lang=en、#en）
+        function detectLanguageFromURL() {
+            try {
+                const url = new URL(window.location.href);
+                const path = url.pathname;
+                const queryLang = url.searchParams.get('lang');
+                const hash = url.hash.replace('#', '').toLowerCase();
+
+                if (queryLang === 'en' || hash === 'en' || /\/en\/?$/.test(path)) {
+                    return 'en';
+                }
+            } catch (_) {}
+            return 'zh';
+        }
+
+        // 切換時同步更新網址（預設使用 ?lang=en，避免靜態主機直接開 /en 404）
+        function updateURLLanguage() {
+            const url = new URL(window.location.href);
+            // 清理可能存在的尾段 /en
+            if (/\/en\/?$/.test(url.pathname)) {
+                url.pathname = url.pathname.replace(/\/en\/?$/, '/');
+            }
+            if (currentLanguage === 'en') {
+                url.searchParams.set('lang', 'en');
+                // 可選：也同步 hash
+                // url.hash = 'en';
+            } else {
+                url.searchParams.delete('lang');
+                if (url.hash.toLowerCase() === '#en') url.hash = '';
+            }
+            window.history.replaceState({}, '', url);
         }
         
         function updateLanguage() {
@@ -1113,7 +1151,10 @@
                 mobileLanguageToggle.addEventListener('click', toggleLanguage);
             }
             
-            // 初始化語言狀態
+            // 初始化語言狀態：依網址偵測並套用
+            const initialLang = detectLanguageFromURL();
+            setLanguage(initialLang, false);
+            updateURLLanguage();
             updateLanguageToggleButtons();
         });
 
