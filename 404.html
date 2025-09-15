@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting…</title>
+    <meta http-equiv="refresh" content="3; url=/">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Noto Sans TC', sans-serif; margin: 40px; color: #334155; }
+        .hint { color: #64748b; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>Redirecting…</h1>
+    <p>We couldn't find this page. Taking you back to the homepage.</p>
+    <p class="hint">If you aren't redirected automatically, <a id="fallback" href="/">click here</a>.</p>
+
+    <script>
+        (function() {
+            try {
+                var url = new URL(window.location.href);
+                // Default target is root
+                var target = new URL('/', window.location.origin);
+
+                // If path ends with /en (with or without trailing slash), map to ?lang=en
+                if (/\/en\/?$/.test(url.pathname)) {
+                    target.searchParams.set('lang', 'en');
+                } else {
+                    // Preserve original query/hash if any; you can customize this behavior
+                    target.search = url.search;
+                    target.hash = url.hash;
+                }
+
+                // Update fallback link and redirect
+                document.getElementById('fallback').href = target.toString();
+                window.location.replace(target.toString());
+            } catch (e) {
+                // If anything goes wrong, fall back to root
+                window.location.replace('/');
+            }
+        })();
+    </script>
+</body>
+</html>
+
+
