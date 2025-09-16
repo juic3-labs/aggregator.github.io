@@ -981,7 +981,8 @@
 
     <script>
         // 語言切換功能
-        let currentLanguage = 'zh';
+        let currentLanguage = detectLanguageFromURL();
+        updateLanguage();
 
         function setLanguage(lang, updateUrl = true) {
             currentLanguage = lang === 'en' ? 'en' : 'zh';
