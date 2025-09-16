@@ -1017,9 +1017,7 @@
                 url.pathname = url.pathname.replace(/\/en\/?$/, '/');
             }
             if (currentLanguage === 'en') {
-                url.pathname = url.pathname + 'en/';
-                window.location.replace(url.toString());
-                return;
+                url.pathname = url.pathname + 'en';
             }
             window.history.replaceState({}, '', url);
         }

@@ -1015,9 +1015,10 @@
             if (/\/en\/?$/.test(url.pathname)) {
                 url.pathname = url.pathname.replace(/\/en\/?$/, '/');
             }
-            if (currentLanguage === 'zh') {
-                window.location.replace(url.toString());
+            if (currentLanguage === 'en') {
+                url.pathname = url.pathname + 'en';
             }
+            window.history.replaceState({}, '', url);
         }
         
         function updateLanguage() {
