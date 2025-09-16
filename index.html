@@ -1016,6 +1016,8 @@
             if (/\/en\/?$/.test(url.pathname)) {
                 url.pathname = url.pathname.replace(/\/en\/?$/, '/');
             }
+            url.searchParams.delete('lang');
+            url.hash = '';
             if (currentLanguage === 'en') {
                 url.pathname = url.pathname + 'en';
             }
