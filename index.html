@@ -981,8 +981,7 @@
 
     <script>
         // 語言切換功能
-        let currentLanguage = detectLanguageFromURL();
-        updateLanguage();
+        let currentLanguage = 'zh';
 
         function setLanguage(lang, updateUrl = true) {
             currentLanguage = lang === 'en' ? 'en' : 'zh';
@@ -1018,12 +1017,9 @@
                 url.pathname = url.pathname.replace(/\/en\/?$/, '/');
             }
             if (currentLanguage === 'en') {
-                url.searchParams.set('lang', 'en');
-                // 可選：也同步 hash
-                // url.hash = 'en';
-            } else {
-                url.searchParams.delete('lang');
-                if (url.hash.toLowerCase() === '#en') url.hash = '';
+                url.pathname = url.pathname + 'en/';
+                window.location.replace(url.toString());
+                return;
             }
             window.history.replaceState({}, '', url);
         }
